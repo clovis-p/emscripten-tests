@@ -9,6 +9,9 @@
 
 static void mainloop();
 
+SDL_Window *win;
+SDL_Renderer *ren;
+
 int main()
 {
     printf("Hello world!\n");
@@ -24,7 +27,7 @@ int main()
 
     printf("l 22\n");
 
-    SDL_Window *win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
+    win = SDL_CreateWindow("Hello World!", 100, 100, 640, 480, SDL_WINDOW_SHOWN);
 
     if (win == NULL)
     {
@@ -35,7 +38,7 @@ int main()
         printf("Window created\n");
     }
 
-    SDL_Renderer *ren = SDL_CreateRenderer(win, -1, 0);
+    ren = SDL_CreateRenderer(win, -1, 0);
 
     if (ren == NULL)
     {

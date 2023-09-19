@@ -8235,6 +8235,13 @@ var ASM_CONSTS = {
 
   
   
+  var _emscripten_set_main_loop = (func, fps, simulateInfiniteLoop) => {
+      var browserIterationFunc = getWasmTableEntry(func);
+      setMainLoop(browserIterationFunc, fps, simulateInfiniteLoop);
+    };
+
+  
+  
   
   var fillMouseEventData = (eventStruct, e, target) => {
       assert(eventStruct % 4 == 0);
@@ -8645,6 +8652,7 @@ var ASM_CONSTS = {
       HEAPU32[((penviron_buf_size)>>2)] = bufSize;
       return 0;
     };
+
 
   function _fd_close(fd) {
   try {
@@ -9365,6 +9373,8 @@ var wasmImports = {
   /** @export */
   emscripten_set_keyup_callback_on_thread: _emscripten_set_keyup_callback_on_thread,
   /** @export */
+  emscripten_set_main_loop: _emscripten_set_main_loop,
+  /** @export */
   emscripten_set_mousedown_callback_on_thread: _emscripten_set_mousedown_callback_on_thread,
   /** @export */
   emscripten_set_mouseenter_callback_on_thread: _emscripten_set_mouseenter_callback_on_thread,
@@ -9398,6 +9408,8 @@ var wasmImports = {
   environ_get: _environ_get,
   /** @export */
   environ_sizes_get: _environ_sizes_get,
+  /** @export */
+  exit: _exit,
   /** @export */
   fd_close: _fd_close,
   /** @export */
