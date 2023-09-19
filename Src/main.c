@@ -7,7 +7,10 @@
 #include <emscripten.h>
 #include <SDL/SDL.h>
 
-int main() {
+static void mainloop();
+
+int main()
+{
     printf("Hello world!\n");
 
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -43,19 +46,38 @@ int main() {
         printf("Renderer created\n");
     }
 
-    SDL_Rect testRect = {100, 100, 100, 100};
+    emscripten_set_main_loop(mainloop, 0, 1);
 
+    return 0;
+}
+
+static void mainloop()
+{
+    int quit = 0;
+    int i = 0;
+
+    SDL_Rect testRect = {100, 100, 100, 100};
     SDL_SetRenderDrawColor(ren, 255, 255, 0, 255);
     SDL_RenderFillRect(ren, &testRect);
     SDL_RenderPresent(ren);
 
-    SDL_Delay(10000);
+    SDL_Delay(10);
 
-    printf("Quitting\n");
+    i++;
 
-    SDL_DestroyRenderer(ren);
-    SDL_DestroyWindow(win);
-    SDL_Quit();
+    if (i == 100)
+    {
+        quit = 1;
+    }
 
-    return 0;
+    if (quit)
+    {
+        printf("Quitting\n");
+
+        SDL_DestroyRenderer(ren);
+        SDL_DestroyWindow(win);
+        SDL_Quit();
+
+        exit(0);
+    }
 }
